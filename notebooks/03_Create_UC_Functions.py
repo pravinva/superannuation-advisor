@@ -19,37 +19,6 @@ print(f"Using catalog: {catalog_name}")
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Common Functions
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC CREATE OR REPLACE FUNCTION ${catalog_name}.common.calculate_retirement_age(birth_date DATE, country_code STRING)
-# MAGIC RETURNS INT
-# MAGIC RETURN CASE 
-# MAGIC   WHEN country_code = 'AUS' THEN 
-# MAGIC     CASE 
-# MAGIC       WHEN year(birth_date) <= 1960 THEN 55
-# MAGIC       WHEN year(birth_date) <= 1961 THEN 56
-# MAGIC       WHEN year(birth_date) <= 1962 THEN 57
-# MAGIC       WHEN year(birth_date) <= 1963 THEN 58
-# MAGIC       WHEN year(birth_date) <= 1964 THEN 59
-# MAGIC       ELSE 60
-# MAGIC     END
-# MAGIC   WHEN country_code = 'USA' THEN 
-# MAGIC     CASE 
-# MAGIC       WHEN year(birth_date) <= 1954 THEN 66
-# MAGIC       WHEN year(birth_date) <= 1959 THEN 67
-# MAGIC       ELSE 67
-# MAGIC     END
-# MAGIC   WHEN country_code = 'UK' THEN 67
-# MAGIC   WHEN country_code = 'IND' THEN 58
-# MAGIC   ELSE 65
-# MAGIC END;
-
-# COMMAND ----------
-
-# MAGIC %md
 # MAGIC ## Australia Functions
 
 # COMMAND ----------
@@ -104,6 +73,17 @@ print(f"Using catalog: {catalog_name}")
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC CREATE OR REPLACE FUNCTION ${catalog_name}.usa.calculate_retirement_age(birth_date DATE)
+# MAGIC RETURNS INT
+# MAGIC RETURN CASE 
+# MAGIC   WHEN year(birth_date) <= 1954 THEN 66
+# MAGIC   WHEN year(birth_date) <= 1959 THEN 67
+# MAGIC   ELSE 67
+# MAGIC END;
+
+# COMMAND ----------
+
+# MAGIC %sql
 # MAGIC CREATE OR REPLACE FUNCTION ${catalog_name}.usa.calculate_social_security_benefit(
 # MAGIC   birth_date DATE,
 # MAGIC   retirement_age INT,
@@ -140,6 +120,13 @@ print(f"Using catalog: {catalog_name}")
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC CREATE OR REPLACE FUNCTION ${catalog_name}.uk.calculate_retirement_age(birth_date DATE)
+# MAGIC RETURNS INT
+# MAGIC RETURN 67;
+
+# COMMAND ----------
+
+# MAGIC %sql
 # MAGIC CREATE OR REPLACE FUNCTION ${catalog_name}.uk.calculate_state_pension(
 # MAGIC   ni_contribution_years INT
 # MAGIC )
@@ -169,6 +156,13 @@ print(f"Using catalog: {catalog_name}")
 
 # MAGIC %md
 # MAGIC ## India Functions
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC CREATE OR REPLACE FUNCTION ${catalog_name}.ind.calculate_retirement_age(birth_date DATE)
+# MAGIC RETURNS INT
+# MAGIC RETURN 58;
 
 # COMMAND ----------
 
@@ -210,7 +204,6 @@ print(f"Using catalog: {catalog_name}")
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC SHOW FUNCTIONS IN ${catalog_name}.common;
 # MAGIC SHOW FUNCTIONS IN ${catalog_name}.aus;
 # MAGIC SHOW FUNCTIONS IN ${catalog_name}.usa;
 # MAGIC SHOW FUNCTIONS IN ${catalog_name}.uk;
