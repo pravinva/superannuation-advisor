@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # 4. Create Audit Tables
-# MAGIC 
+# MAGIC
 # MAGIC This notebook creates audit tables for logging interactions and agent traces.
 
 # COMMAND ----------
@@ -41,7 +41,7 @@ print(f"Using catalog: {catalog_name}")
 # MAGIC   experiment_id STRING
 # MAGIC ) USING delta
 # MAGIC TBLPROPERTIES (delta.autoOptimize.optimizeWrite = true);
-# MAGIC 
+# MAGIC
 # MAGIC GRANT SELECT, MODIFY ON TABLE ${catalog_name}.audit.chat_interactions TO `account users`;
 
 # COMMAND ----------
@@ -64,7 +64,7 @@ print(f"Using catalog: {catalog_name}")
 # MAGIC   tools_called ARRAY<STRUCT<tool_name: STRING, parameters: STRING, result: STRING>>,
 # MAGIC   timestamp TIMESTAMP
 # MAGIC ) USING delta;
-# MAGIC 
+# MAGIC
 # MAGIC GRANT SELECT, MODIFY ON TABLE ${catalog_name}.audit.agent_traces TO `account users`;
 
 # COMMAND ----------
@@ -88,7 +88,7 @@ print(f"Using catalog: {catalog_name}")
 # MAGIC   evaluation_date DATE,
 # MAGIC   parameters MAP<STRING, STRING>
 # MAGIC ) USING delta;
-# MAGIC 
+# MAGIC
 # MAGIC GRANT SELECT, MODIFY ON TABLE ${catalog_name}.audit.model_evaluations TO `account users`;
 
 # COMMAND ----------
@@ -108,19 +108,8 @@ print(f"Using catalog: {catalog_name}")
 # MAGIC   most_used_tools ARRAY<STRING>,
 # MAGIC   unique_users INT
 # MAGIC ) USING delta;
-# MAGIC 
+# MAGIC
 # MAGIC GRANT SELECT, MODIFY ON TABLE ${catalog_name}.audit.usage_analytics TO `account users`;
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ## Bulk Grant Alternative
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC -- Alternative: Grant permissions on all tables in audit schema
-# MAGIC GRANT SELECT, MODIFY ON ALL TABLES IN ${catalog_name}.audit TO `account users`;
 
 # COMMAND ----------
 
