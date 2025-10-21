@@ -41,12 +41,31 @@ print(f"Creating schemas for: {country_schemas}")
 
 # COMMAND ----------
 
+# Create country schemas
 for schema in country_schemas:
     print(f"Creating schema: {schema}")
     spark.sql(f"CREATE SCHEMA IF NOT EXISTS {catalog_name}.{schema}")
 
 # Create audit schema
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS {catalog_name}.audit")
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ## Grant Schema Permissions
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC -- Grant USAGE on all schemas to account users
+# MAGIC GRANT USAGE ON SCHEMA ${catalog_name}.audit TO `account users`;
+
+# COMMAND ----------
+
+# Grant permissions for each country schema
+for schema in country_schemas:
+    print(f"Granting permissions on schema: {schema}")
+    spark.sql(f"GRANT USAGE ON SCHEMA {catalog_name}.{schema} TO `account users`")
 
 # COMMAND ----------
 
