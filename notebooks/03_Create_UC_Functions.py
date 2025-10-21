@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # 3. Create Unity Catalog Functions
-# MAGIC 
+# MAGIC
 # MAGIC This notebook creates the pension calculation functions.
 
 # COMMAND ----------
@@ -204,6 +204,7 @@ print(f"Using catalog: {catalog_name}")
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC USE CATALOG multi_country_pension;
 # MAGIC SHOW FUNCTIONS IN ${catalog_name}.aus;
 # MAGIC SHOW FUNCTIONS IN ${catalog_name}.usa;
 # MAGIC SHOW FUNCTIONS IN ${catalog_name}.uk;
